@@ -1,7 +1,13 @@
 const express = require('express');
+const dotenv = require('dotenv');
 const { graphqlHTTP } = require('express-graphql');
 
+const dbConnect = require('./db/connection');
+
 import schema from './schema/schema';
+
+dotenv.config();
+dbConnect();
 
 const app = express();
 app.use(
