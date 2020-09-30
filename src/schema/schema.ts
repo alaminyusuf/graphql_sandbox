@@ -1,3 +1,5 @@
+import User from '../db/models/User';
+
 import {
   GraphQLList,
   GraphQLNonNull,
@@ -5,13 +7,6 @@ import {
   GraphQLSchema,
   GraphQLString,
 } from 'graphql';
-
-// demo data
-const users = [
-  { id: '1', name: 'Adrean', email: 'adrean@gmail.com' },
-  { id: '2', name: 'Mike', email: 'mike@gmail.com' },
-  { id: '3', name: 'Paul', email: 'paul@gmail.com' },
-];
 
 const UserType = new GraphQLObjectType({
   name: 'User',
@@ -28,7 +23,7 @@ const RootQuery = new GraphQLObjectType({
     users: {
       type: new GraphQLList(UserType),
       resolve() {
-        return users;
+        return User.find();
       },
     },
   },
@@ -50,7 +45,7 @@ const Mutation = new GraphQLObjectType({
           name: args.name,
           email: args.email,
         };
-        return users.push(user);
+        return User.create(user);
       },
     },
   },
